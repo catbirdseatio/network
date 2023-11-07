@@ -41,7 +41,7 @@ jobs:
         python -m pip install --upgrade pip
         python -m pip install -r requirements.txt
     - name: Run migrations
-      run: python -m manage.py migrate
+      run: python manage.py migrate
     - name: Run Tests
       run: |
         python -m pytest
