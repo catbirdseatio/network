@@ -65,7 +65,7 @@ WSGI_APPLICATION = "project4.wsgi.application"
 
 # DATABASE SETTINGS
 DATABASES = {
-    "default": env.db(default="sqlite:///db.sqlite3"),
+    "default": env.db(),
 }
 
 
