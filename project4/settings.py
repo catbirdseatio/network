@@ -63,11 +63,8 @@ WSGI_APPLICATION = "project4.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+# DATABASE SETTINGS
 DATABASES = {
-    # read os.environ['DATABASE_URL'] and raises
-    # ImproperlyConfigured exception if not found
-    #
-    # The db() method is an alias for db_url().
     "default": env.db(),
 }
 
