@@ -1,12 +1,11 @@
 from django.contrib.auth import get_user_model
 import factory
-from faker import Faker
+import factory.fuzzy
 
 from apps.posts.models import Post
 
 
 CustomUser = get_user_model()
-fake = Faker()
 
 
 class UserFactory(factory.django.DjangoModelFactory):
