@@ -1,31 +1,27 @@
 import React, { useEffect, useState } from "react";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import axios from "./axios";
 
 import Container from "react-bootstrap/Container";
 import Header from "./components/Header";
-import Posts from "./components/Posts";
-import Body from "./components/Body"
+import FeedPage from "./pages/FeedPage";
+import AllPostsPage from "./pages/AllPostsPage";
+import UserPage from "./pages/UserPage";
+import Redirect from "./pages/Redirect";
 
 const App = () => {
-  const [data, setData] = useState({});
-
-  useEffect(() => {
-    (async () => {
-      try {
-        const { data } = await axios("/posts");
-        setData(data);
-      } catch (error) {
-        console.error(error.message);
-      }
-    })();
-  }, []);
-
   return (
     <Container fluid className="App">
-      <Header />
-      <Body>
-        <Posts posts={data.results}/>
-      </Body>
+      <BrowserRouter>
+        <Header />
+        <Routes>
+          <Route path="/" element={<AllPostsPage />} />
+          <Route path="/feed" element={<FeedPage />} />
+          <Route path="/users/:username" element={<UserPage />} />
+          <Route path="/login" element={<Redirect url={'/admin'} />} />
+          <Route path="*" element={<Navigate to="/" />} />
+        </Routes>
+      </BrowserRouter>
     </Container>
   );
 };
