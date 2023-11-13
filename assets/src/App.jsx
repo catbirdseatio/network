@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import axios from "./axios";
+import ApiProvider from "./contexts/ApiProvider";
 
 import Container from "react-bootstrap/Container";
 import Header from "./components/Header";
@@ -13,14 +13,16 @@ const App = () => {
   return (
     <Container fluid className="App">
       <BrowserRouter>
-        <Header />
-        <Routes>
-          <Route path="/" element={<AllPostsPage />} />
-          <Route path="/feed" element={<FeedPage />} />
-          <Route path="/users/:username" element={<UserPage />} />
-          <Route path="/login" element={<Redirect url={'/admin'} />} />
-          <Route path="*" element={<Navigate to="/" />} />
-        </Routes>
+        <ApiProvider>
+          <Header />
+          <Routes>
+            <Route path="/" element={<AllPostsPage />} />
+            <Route path="/feed" element={<FeedPage />} />
+            <Route path="/users/:username" element={<UserPage />} />
+            <Route path="/login" element={<Redirect url={"/admin"} />} />
+            <Route path="*" element={<Navigate to="/" />} />
+          </Routes>
+        </ApiProvider>
       </BrowserRouter>
     </Container>
   );

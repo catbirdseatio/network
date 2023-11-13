@@ -7,7 +7,6 @@ urlpatterns = [
     path("", include("apps.core.urls")),
     path("api/v1/", include("apps.posts.urls")),
     path("api-auth/", include("rest_framework.urls")),
-    re_path(r'^(?:.*)/?$', include('apps.core.urls')),
 ]
 
 if settings.DEBUG:

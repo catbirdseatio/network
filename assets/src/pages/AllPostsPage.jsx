@@ -8,7 +8,7 @@ const AllPostsPage = () => {
   return (
     <Body>
         <h2>All Posts</h2>
-        <Posts posts={[]}/>
+        <Posts />
     </Body>
   )
 }
