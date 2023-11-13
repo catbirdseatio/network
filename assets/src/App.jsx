@@ -1,13 +1,19 @@
 import React, { useEffect, useState } from "react";
 import axios from "./axios";
 
+import Container from "react-bootstrap/Container";
+import Header from "./components/Header";
+import Posts from "./components/Posts";
+import Body from "./components/Body"
+
 const App = () => {
-  const [posts, setPosts] = useState([]);
+  const [data, setData] = useState({});
+
   useEffect(() => {
     (async () => {
       try {
-        const results = await axios("/posts");
-        setPosts(results.data);
+        const { data } = await axios("/posts");
+        setData(data);
       } catch (error) {
         console.error(error.message);
       }
@@ -15,12 +21,12 @@ const App = () => {
   }, []);
 
   return (
-    <>
-      <h1>Hello From React</h1>
-      <ul>
-        {posts.map(post => <li key={post.pk}><strong>{post.author}</strong> : {post.body}</li>)}
-      </ul>
-    </>
+    <Container fluid className="App">
+      <Header />
+      <Body>
+        <Posts posts={data.results}/>
+      </Body>
+    </Container>
   );
 };
 

@@ -133,4 +133,5 @@ REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": [
         "rest_framework.authentication.SessionAuthentication",
     ],
+    'DEFAULT_PAGINATION_CLASS': 'apps.posts.pagination.PostPagination',
 }
