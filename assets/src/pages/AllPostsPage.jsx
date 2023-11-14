@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import Spinner from "react-bootstrap/Spinner";
-import Button from "react-bootstrap/Button";
 
 import useDataApi from "../hooks/useDataApi";
 import Body from "../components/Body";

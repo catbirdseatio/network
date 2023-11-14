@@ -11,7 +11,7 @@ import Redirect from "./pages/Redirect";
 
 const App = () => {
   return (
-    <Container fluid className="App">
+    <Container fluid className="App vh-100">
       <BrowserRouter>
         <ApiProvider>
           <Header />
@@ -19,7 +19,7 @@ const App = () => {
             <Route path="/" element={<AllPostsPage />} />
             <Route path="/feed" element={<FeedPage />} />
             <Route path="/users/:username" element={<UserPage />} />
-            <Route path="/login" element={<Redirect url={"/admin"} />} />
+            <Route path="/login" element={<Redirect url={"/login"} />} />
             <Route path="*" element={<Navigate to="/" />} />
           </Routes>
         </ApiProvider>

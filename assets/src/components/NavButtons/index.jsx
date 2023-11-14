@@ -1,20 +1,14 @@
 import React from "react";
 import { Stack } from "react-bootstrap";
-import Button from "react-bootstrap/Button";
+import Pagination from "react-bootstrap/Pagination";
 
 const NavButtons = ({ pagination, onNext, onPrevious }) => {
   return (
-    <Stack direction="horizontal">
-      {pagination.previous && (
-        <Button variant="primary" onClick={onPrevious}>
-          Previous
-        </Button>
-      )}
-      {pagination.next && (
-        <Button variant="primary" onClick={onNext}>
-          Next
-        </Button>
-      )}
+    <Stack direction="horizontal" style={{ display: "flex", justifyContent: "center" }}>
+    <Pagination>
+      <Pagination.Prev disabled={!pagination.previous} onClick={onPrevious} />
+      <Pagination.Next disabled={!pagination.next} onClick={onNext} />
+    </Pagination>
     </Stack>
   );
 };
