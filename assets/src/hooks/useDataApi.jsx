@@ -8,22 +8,24 @@ const useDataApi = (initalUrl, initialData) => {
   const [isError, setIsError] = useState(false);
   const api = useApi();
 
-  useEffect(() => {
-    (async () => {
-      setIsError(false);
-      setIsLoading(true);
+  const fetchData = async () => {
+    setIsError(false);
+    setIsLoading(true);
 
-      try {
-        const result = await api.get(url);
-        setData(result.data);
-      } catch (error) {
-        setIsError(true);
-      }
-      setIsLoading(false);
-    })();
+    try {
+      const result = await api.get(url);
+      setData(result.data);
+    } catch (error) {
+      setIsError(true);
+    }
+    setIsLoading(false);
+  };
+
+  useEffect(() => {
+    fetchData()
   }, [api, url]);
 
-  return [{ data, isLoading, isError }, setUrl];
+  return [{ data, isLoading, isError }, setUrl, fetchData];
 };
 
 export default useDataApi;

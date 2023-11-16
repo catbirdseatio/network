@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import Spinner from "react-bootstrap/Spinner";
 
@@ -10,9 +10,12 @@ import NavButtons from "../components/NavButtons";
 import PostForm from "../components/PostForm";
 
 const AllPostsPage = () => {
-  const [{ data, isLoading, isError }, setUrl] = useDataApi("/posts/", {
-    results: [],
-  });
+  const [{ data, isLoading, isError }, setUrl, fetchData] = useDataApi(
+    "/posts/",
+    {
+      results: [],
+    }
+  );
   const { results, next, previous } = data;
   const pagination = { next, previous };
   const api = useApi();
@@ -25,9 +28,16 @@ const AllPostsPage = () => {
     setUrl(pagination.previous);
   };
 
-  const submitHandler = (data) => {
-    api.post("/posts/", data);
-    navigate("/");
+  const submitHandler = async (data) => {
+    try {
+      await api.post("/posts/", data);
+      // reset state by resetting url and navigating back to homepage.
+      setUrl("/posts/");
+      fetchData();
+      navigate("/");
+    } catch (error) {
+      console.log(error.message);
+    }
   };
 
   return (

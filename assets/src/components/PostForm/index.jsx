@@ -9,7 +9,6 @@ const PostForm = ({ onSubmit }) => {
         reset,
         control,
         formState,
-        formState: { isSubmitSuccessful },
       } = useForm()
     
       React.useEffect(() => {
