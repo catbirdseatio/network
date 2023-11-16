@@ -8,7 +8,7 @@ const Header = () => {
   return (
     <Navbar expand="lg" className="bg-body-tertiary Header">
       <Container fluid>
-        <Navbar.Brand>Network</Navbar.Brand>
+        <Navbar.Brand href="/">Network</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse className="justify-content-end">
           <Nav className="ml-auto">
