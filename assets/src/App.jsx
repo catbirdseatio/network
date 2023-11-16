@@ -4,10 +4,10 @@ import ApiProvider from "./contexts/ApiProvider";
 
 import Container from "react-bootstrap/Container";
 import Header from "./components/Header";
+import Redirect from "./components/Redirect";
 import FeedPage from "./pages/FeedPage";
 import AllPostsPage from "./pages/AllPostsPage";
 import UserPage from "./pages/UserPage";
-import Redirect from "./pages/Redirect";
 
 const App = () => {
   return (
