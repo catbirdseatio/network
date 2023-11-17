@@ -1,8 +1,15 @@
-from rest_framework import generics, permissions
+from rest_framework import views, generics, permissions
+from rest_framework.response import Response
 
 from .models import Post
 from .permissions import IsAuthorOrReadOnly
-from .serializers import PostSerializer
+from .serializers import PostSerializer, UserSerializer
+
+
+class CurrentUserDetail(views.APIView):
+    def get(self, request):
+        serializer = UserSerializer(request.user)
+        return Response(serializer.data)
 
 
 class PostList(generics.ListCreateAPIView):

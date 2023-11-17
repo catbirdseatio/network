@@ -10,7 +10,7 @@ import NavButtons from "../components/NavButtons";
 import PostForm from "../components/PostForm";
 
 const AllPostsPage = () => {
-  const [{ data, isLoading, isError }, setUrl, fetchData] = useDataApi(
+  const [{ data, isLoading, isError }, setUrl, fetchPosts] = useDataApi(
     "/posts/",
     {
       results: [],
@@ -33,7 +33,7 @@ const AllPostsPage = () => {
       await api.post("/posts/", data);
       // reset state by resetting url and navigating back to homepage.
       setUrl("/posts/");
-      fetchData();
+      fetchPosts();
       navigate("/");
     } catch (error) {
       console.log(error.message);
