@@ -6,12 +6,13 @@ const UserContext = createContext();
 const UserProvider = ({ children }) => {
   const [{ data, isLoading, isError }, setUrl, fetchUser] = useDataApi(
     "/users/user",
-    {pk: 0,
-    username: ""}
+    {}
   );
 
+  const isAuthenticated = () => (data.is_authenticated);
+
   return (
-    <UserContext.Provider value={{ user: data, isErrorUser: isError, isLoadingUser: isLoading }}>
+    <UserContext.Provider value={{ user:data, isErrorUser: isError, isLoadingUser: isLoading, isAuthenticated }}>
       {children}
     </UserContext.Provider>
   );

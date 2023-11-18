@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Spinner from "react-bootstrap/Spinner";
 
 import useDataApi from "../hooks/useDataApi";
+import { useUserContext } from "../contexts/UserContext";
 import { useApi } from "../contexts/ApiProvider";
 import Body from "../components/Body";
 import Posts from "../components/Posts";
@@ -19,6 +20,7 @@ const AllPostsPage = () => {
   const { results, next, previous } = data;
   const pagination = { next, previous };
   const api = useApi();
+  const { user, isAuthenticated } = useUserContext()
   const navigate = useNavigate();
 
   const nextButtonHandler = () => {
@@ -43,7 +45,7 @@ const AllPostsPage = () => {
   return (
     <Body>
       <h2>All Posts</h2>
-      <PostForm onSubmit={submitHandler} />
+      {isAuthenticated() && <PostForm onSubmit={submitHandler} />}
       {isError && <p className="danger">{isError}</p>}
       {isLoading ? <Spinner /> : <Posts posts={results} />}
       <NavButtons

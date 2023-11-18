@@ -6,7 +6,7 @@ import { NavLink } from "react-router-dom";
 import { useUserContext } from "../../contexts/UserContext";
 
 const Header = () => {
-  const { user, isLoadingUser } = useUserContext();
+  const { user, isAuthenticated } = useUserContext();
 
   return (
     <Navbar expand="lg" className="bg-body-tertiary Header">
@@ -18,12 +18,12 @@ const Header = () => {
             <Nav.Link as={NavLink} to="/">
               All Posts
             </Nav.Link>
-            {user.username && (
+            {isAuthenticated() && (
               <Nav.Link as={NavLink} to={`#`}>
                 {user.username}
               </Nav.Link>
             )}
-            {user.pk ? (
+            {isAuthenticated() ? (
               <>
                 <Nav.Link as={NavLink} to="/feed">
                   Following
