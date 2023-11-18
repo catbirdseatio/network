@@ -16,16 +16,16 @@ class CurrentUserDetail(views.APIView):
 
 class PostList(generics.ListCreateAPIView):
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
-    queryset = Post.objects.select_related('author').all()
+    queryset = Post.objects.select_related("author").all()
     serializer_class = PostSerializer
     filter_backends = (filters.DjangoFilterBackend,)
     filterset_class = PostFilter
-    
+
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
 
 
 class PostDetail(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = (IsAuthorOrReadOnly,)
-    queryset = Post.objects.select_related('author').all()
+    queryset = Post.objects.select_related("author").all()
     serializer_class = PostSerializer

@@ -11,7 +11,7 @@ import NavButtons from "../components/NavButtons";
 const UserPage = () => {
   {
     const { username } = useParams();
-    const [{ data, isLoading, isError }, setUrl] = useDataApi(`/posts/${username}`, {
+    const [{ data, isLoading, isError }, setUrl] = useDataApi(`/posts/?author=&author_username=${username}`, {
       results: [],
     });
     const { results, next, previous } = data;
@@ -26,7 +26,7 @@ const UserPage = () => {
   
     return (
       <Body>
-        <h2>All Posts</h2>
+        <h2>{username}</h2>
         {isError && <p className="danger">{isError}</p>}
         {isLoading ? <Spinner /> : <Posts posts={results} />}
         <NavButtons

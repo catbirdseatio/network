@@ -8,7 +8,7 @@ class Post(models.Model):
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    
+
     class Meta:
         ordering = ["-created_at"]
 
@@ -16,7 +16,7 @@ class Post(models.Model):
         if len(self.body) > 25:
             return f"{self.body[:25]}..."
         return self.body
-    
+
     def clean(self):
         if len(self.body) > 128:
             raise ValidationError("Post cannot exceed 128 characters.")
