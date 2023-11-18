@@ -9,10 +9,9 @@ const UserProvider = ({ children }) => {
     {}
   );
 
-  const isAuthenticated = () => (data.is_authenticated);
 
   return (
-    <UserContext.Provider value={{ user:data, isErrorUser: isError, isLoadingUser: isLoading, isAuthenticated }}>
+    <UserContext.Provider value={{ user:data, isErrorUser: isError, isLoadingUser: isLoading }}>
       {children}
     </UserContext.Provider>
   );

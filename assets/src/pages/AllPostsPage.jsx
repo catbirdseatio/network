@@ -17,10 +17,11 @@ const AllPostsPage = () => {
       results: [],
     }
   );
+  
   const { results, next, previous } = data;
   const pagination = { next, previous };
   const api = useApi();
-  const { user, isAuthenticated } = useUserContext()
+  const { user } = useUserContext()
   const navigate = useNavigate();
 
   const nextButtonHandler = () => {
@@ -45,7 +46,7 @@ const AllPostsPage = () => {
   return (
     <Body>
       <h2>All Posts</h2>
-      {isAuthenticated() && <PostForm onSubmit={submitHandler} />}
+      {user.is_authenticated && <PostForm onSubmit={submitHandler} />}
       {isError && <p className="danger">{isError}</p>}
       {isLoading ? <Spinner /> : <Posts posts={results} />}
       <NavButtons

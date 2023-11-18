@@ -11,12 +11,28 @@ class UserSerializer(serializers.ModelSerializer):
     is_authenticated = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
-        fields = ("username", "is_authenticated")
+        fields = ("pk", "username", "is_authenticated",)
         model = CustomUser
 
     def get_is_authenticated(self, obj):
         """Determine if the user is authenticated. The obj is the user passed by the request."""
         return obj.is_anonymous == False
+
+
+class UserProfileSerializer(serializers.ModelSerializer):
+    follows = serializers.SerializerMethodField(read_only=True)
+    following = serializers.SerializerMethodField(read_only=True)
+    
+    class Meta:
+        fields = ("pk", "username", "follows", "following")
+        model = CustomUser
+    
+    def get_follows(self, obj):
+        return obj.count_follows()
+    
+    def get_following(self, obj):
+        return obj.count_following()
+
 
 
 class PostSerializer(serializers.ModelSerializer):

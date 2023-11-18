@@ -4,14 +4,28 @@ from django_filters import rest_framework as filters
 
 from .models import Post
 from .permissions import IsAuthorOrReadOnly
-from .serializers import PostSerializer, UserSerializer
+from django.contrib.auth import get_user_model
+from .serializers import PostSerializer, UserSerializer, UserProfileSerializer
 from .filters import PostFilter
+
+User= get_user_model()
 
 
 class CurrentUserDetail(views.APIView):
     def get(self, request):
         serializer = UserSerializer(request.user)
         return Response(serializer.data)
+
+
+class UserProfileDetail(generics.RetrieveAPIView):
+    lookup_field = "username"
+    serializer_class = UserProfileSerializer
+    
+    def get_queryset(self):
+        username = self.kwargs["username"]
+        model = User.objects.filter(username=username)
+        return model
+    
 
 
 class PostList(generics.ListCreateAPIView):

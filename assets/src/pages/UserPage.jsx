@@ -6,14 +6,22 @@ import useDataApi from "../hooks/useDataApi";
 import Body from "../components/Body";
 import Posts from "../components/Posts";
 import NavButtons from "../components/NavButtons";
+import UserProfileCard from "../components/UserProfileCard";
 
 
 const UserPage = () => {
-  {
+  { 
+
     const { username } = useParams();
-    const [{ data, isLoading, isError }, setUrl] = useDataApi(`/posts/?author=&author_username=${username}`, {
+
+    const [{ data, isLoading, isError }, setUrl] = useDataApi(`/posts/?author_username=${username}`, {
       results: [],
     });
+
+    const [{ data:author, isLoading:isLoadingAuthor, isError:isErrorAuthor }, authorUrl] = useDataApi(`/users/${username}`, {
+      results: {},
+    });
+
     const { results, next, previous } = data;
     const pagination = { next, previous };
   
@@ -26,8 +34,8 @@ const UserPage = () => {
   
     return (
       <Body>
-        <h2>{username}</h2>
         {isError && <p className="danger">{isError}</p>}
+        {isLoadingAuthor ? <Spinner /> : <UserProfileCard user={author}/>}
         {isLoading ? <Spinner /> : <Posts posts={results} />}
         <NavButtons
           pagination={pagination}
