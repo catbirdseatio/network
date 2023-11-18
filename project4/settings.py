@@ -26,6 +26,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     # 3rd Party Apps
     "rest_framework",
+    "django_filters",
     "debug_toolbar",
     # Local Apps
     "apps.core.apps.CoreConfig",
@@ -133,5 +134,5 @@ REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": [
         "rest_framework.authentication.SessionAuthentication",
     ],
-    'DEFAULT_PAGINATION_CLASS': 'apps.posts.pagination.PostPagination',
+    "DEFAULT_PAGINATION_CLASS": "apps.posts.pagination.PostPagination",
 }
