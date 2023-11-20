@@ -6,7 +6,7 @@ import useDataApi from "../hooks/useDataApi";
 import Body from "../components/Body";
 import Posts from "../components/Posts";
 import NavButtons from "../components/NavButtons";
-import UserProfileCard from "../components/UserProfileCard";
+import AuthorProfileCard from "../components/AuthorProfileCard";
 
 
 const UserPage = () => {
@@ -35,7 +35,7 @@ const UserPage = () => {
     return (
       <Body>
         {isError && <p className="danger">{isError}</p>}
-        {isLoadingAuthor ? <Spinner /> : <UserProfileCard user={author}/>}
+        {isLoadingAuthor ? <Spinner /> : <AuthorProfileCard author={author}/>}
         {isLoading ? <Spinner /> : <Posts posts={results} />}
         <NavButtons
           pagination={pagination}

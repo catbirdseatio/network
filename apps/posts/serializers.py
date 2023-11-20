@@ -24,22 +24,25 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class UserProfileSerializer(serializers.ModelSerializer):
-    follows = serializers.SerializerMethodField(read_only=True)
+    followers = serializers.SerializerMethodField(read_only=True)
     following = serializers.SerializerMethodField(read_only=True)
     is_following = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
-        fields = ("pk", "username", "follows", "following", "is_following")
+        fields = ("pk", "username", "followers", "following", "is_following")
         model = CustomUser
 
-    def get_follows(self, obj):
-        return obj.count_follows()
+    def get_followers(self, obj):
+        return obj.count_followers()
 
     def get_following(self, obj):
         return obj.count_following()
 
     def get_is_following(self, obj):
-        return self.context.get("request").user.follows.filter(pk=obj.pk).exists()
+        user = self.context.get("request").user
+        if user.is_authenticated:
+            return user.followers.filter(pk=obj.pk).exists()
+        return False
 
 
 class PostSerializer(serializers.ModelSerializer):
