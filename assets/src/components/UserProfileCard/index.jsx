@@ -1,14 +1,17 @@
-import React from 'react'
-import Card from 'react-bootstrap/Card'
+import React from "react";
+import Card from "react-bootstrap/Card";
+import Button from "react-bootstrap/Button";
 
 const UserProfileCard = ({ user }) => {
   return (
-    <Card>
+    <Card className="text-center">
+      <Card.Body>
         <Card.Title>{user.username}</Card.Title>
-        <Card.Body></Card.Body>
-        <Card.Footer></Card.Footer>
+        <Button>Follow</Button>
+      </Card.Body>
+      <Card.Footer></Card.Footer>
     </Card>
-  )
-}
+  );
+};
 
-export default UserProfileCard
+export default UserProfileCard;

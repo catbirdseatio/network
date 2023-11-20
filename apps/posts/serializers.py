@@ -11,7 +11,11 @@ class UserSerializer(serializers.ModelSerializer):
     is_authenticated = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
-        fields = ("pk", "username", "is_authenticated",)
+        fields = (
+            "pk",
+            "username",
+            "is_authenticated",
+        )
         model = CustomUser
 
     def get_is_authenticated(self, obj):
@@ -22,17 +26,20 @@ class UserSerializer(serializers.ModelSerializer):
 class UserProfileSerializer(serializers.ModelSerializer):
     follows = serializers.SerializerMethodField(read_only=True)
     following = serializers.SerializerMethodField(read_only=True)
-    
+    is_following = serializers.SerializerMethodField(read_only=True)
+
     class Meta:
-        fields = ("pk", "username", "follows", "following")
+        fields = ("pk", "username", "follows", "following", "is_following")
         model = CustomUser
-    
+
     def get_follows(self, obj):
         return obj.count_follows()
-    
+
     def get_following(self, obj):
         return obj.count_following()
 
+    def get_is_following(self, obj):
+        return self.context.get("request").user.follows.filter(pk=obj.pk).exists()
 
 
 class PostSerializer(serializers.ModelSerializer):
