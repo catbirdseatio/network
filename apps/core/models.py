@@ -15,8 +15,8 @@ class CustomUser(AbstractUser):
         return self.following.count()
     
     def follow_author(self, author):
-        self.followers.add(author)
+        self.following.add(author)
     
     def unfollow_author(self, author):
-        self.followers.remove(author)
+        self.following.remove(author)
     

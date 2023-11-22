@@ -41,7 +41,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
     def get_is_following(self, obj):
         user = self.context.get("request").user
         if user.is_authenticated:
-            return user.followers.filter(pk=obj.pk).exists()
+            return obj.followers.filter(pk=user.pk).exists()
         return False
 
 

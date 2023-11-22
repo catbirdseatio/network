@@ -22,6 +22,13 @@ const UserPage = () => {
       results: {},
     });
 
+    // If a user new user profile is selected, don't forget to change the request urls
+    useEffect(() => {
+      setUrl(`/posts/?author_username=${username}`);
+      authorUrl(`/users/${username}`);
+    }, [username])
+    
+
     const { results, next, previous } = data;
     const pagination = { next, previous };
   

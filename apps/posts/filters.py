@@ -1,6 +1,10 @@
+from django.contrib.auth import get_user_model
 import django_filters
 
 from .models import Post
+
+
+User = get_user_model()
 
 
 class PostFilter(django_filters.FilterSet):

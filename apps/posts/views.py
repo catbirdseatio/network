@@ -1,10 +1,11 @@
-from rest_framework import views, generics, permissions
+from django.contrib.auth import get_user_model
+from django.shortcuts import get_object_or_404
+from rest_framework import views, generics, permissions, exceptions, status
 from rest_framework.response import Response
 from django_filters import rest_framework as filters
 
 from .models import Post
 from .permissions import IsAuthorOrReadOnly
-from django.contrib.auth import get_user_model
 from .serializers import PostSerializer, UserSerializer, UserProfileSerializer
 from .filters import PostFilter
 
@@ -25,7 +26,6 @@ class UserProfileDetail(generics.RetrieveAPIView):
         username = self.kwargs["username"]
         model = User.objects.filter(username=username)
         return model
-    
 
 
 class PostList(generics.ListCreateAPIView):
@@ -39,7 +39,38 @@ class PostList(generics.ListCreateAPIView):
         serializer.save(author=self.request.user)
 
 
+class FeedList(generics.ListAPIView):
+    permission_classes = (permissions.IsAuthenticated,)
+    serializer_class = PostSerializer
+    
+    def get_queryset(self):
+        user = self.request.user
+        following = user.following.values_list("pk", flat=True)
+        print(following)
+        return Post.objects.select_related("author").filter(author_id__in=following)
+
+
 class PostDetail(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = (IsAuthorOrReadOnly,)
     queryset = Post.objects.select_related("author").all()
     serializer_class = PostSerializer
+
+
+class FollowUserView(views.APIView):
+    permission_classes = (permissions.IsAuthenticated,)
+    
+    def put(self, request, username):
+        author = get_object_or_404(User, username=username)
+        user = request.user
+        
+        if author.pk == user.pk:
+            return Response({'detail': "cannot follow self."}, status=status.HTTP_400_BAD_REQUEST)
+        
+        user.follow_author(author)
+        return Response({}, status=status.HTTP_204_NO_CONTENT)
+    
+    def delete(self, request, username):
+        author = get_object_or_404(User, username=username)
+        user = request.user
+        user.unfollow_author(author)
+        return Response({}, status=status.HTTP_204_NO_CONTENT)

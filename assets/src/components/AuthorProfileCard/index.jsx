@@ -1,41 +1,55 @@
-import React, { useState } from "react";
-
-import { useUserContext } from "../../contexts/UserContext";
+import React, { useState, useEffect } from "react";
 import Card from "react-bootstrap/Card";
-import Button from "react-bootstrap/Button";
 import Stack from "react-bootstrap/Stack";
+import Button from "react-bootstrap/Button";
+import { useApi } from "../../contexts/ApiProvider";
+import { useUserContext } from "../../contexts/UserContext";
 
 const AuthorProfileCard = ({ author }) => {
-  const { user } = useUserContext();
-  const [followers, setFollowers] = useState(author.followers);
   const [isFollowing, setIsFollowing] = useState(author.is_following);
+  const [followersCount, setFollowersCount] = useState(author.followers);
+  const api = useApi();
+  const { user } = useUserContext();
 
-  const handleFollow = () => {
+  const handleFollow = async () => {
+    const url = `/users/${author.username}/follow`;
+
+    // Optimistic update
     setIsFollowing(!isFollowing);
-    setFollowers(isFollowing ? isFollowing - 1 : isFollowing + 1);
+    setFollowersCount(isFollowing ? followersCount - 1 : followersCount + 1);
+
+    // Make API request
+    try {
+      if (isFollowing) {
+        // Unfollow: DELETE request
+        await api.delete(url);
+      } else {
+        // Follow: POST request
+        await api.put(url);
+      }
+      // Successful server response, no need to do anything
+    } catch (error) {
+      // Handle error by reverting the optimistic update
+      setIsFollowing(!isFollowing);
+      setFollowersCount(isFollowing ? followersCount - 1 : followersCount + 1);
+      console.error("Error handling follow/unfollow:", error.message);
+    }
   };
 
   return (
-    <Card className="my-3">
-      <Card.Header></Card.Header>
+    <Card className="my-2">
+      <Card.Header>{author.username}</Card.Header>
       <Card.Body>
-        <Card.Title className="text-center">{author.username}</Card.Title>
-        <Stack direction="horizontal" gap={3}>
-          <p>Followers: {followers}</p>
-          <p className="ms-auto">Following: {author.following}</p>
+        <Stack>
+          <p>Followers: {followersCount}</p>
+          <p>Following: {author.following}</p>
         </Stack>
-        <div className="d-grid gap-2">
-          {user.is_authenticated && (
-            <Button
-              onClick={handleFollow}
-              className={`btn btn-${isFollowing ? "danger" : "primary"}`}
-            >
-              {isFollowing ? "Unfollow" : "Follow"}
-            </Button>
-          )}
-        </div>
+        {user.is_authenticated && user.pk !== author.pk && (
+          <button onClick={handleFollow}>
+            {isFollowing ? "Unfollow" : "Follow"} ({followersCount} followers)
+          </button>
+        )}
       </Card.Body>
-      <Card.Footer></Card.Footer>
     </Card>
   );
 };
