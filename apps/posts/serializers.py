@@ -48,13 +48,20 @@ class UserProfileSerializer(serializers.ModelSerializer):
 class PostSerializer(serializers.ModelSerializer):
     author = serializers.SerializerMethodField(read_only=True)
     is_author = serializers.SerializerMethodField(read_only=True)
-
+    is_liked = serializers.SerializerMethodField(read_only=True)
+    
     class Meta:
         model = Post
-        fields = ("pk", "author", "body", "created_at", "is_author")
+        fields = ("pk", "author", "body", "created_at", "is_author", "is_liked")
 
     def get_author(self, obj):
         return obj.author.username
 
     def get_is_author(self, obj):
         return obj.author == self.context.get("request").user
+
+    def get_is_liked(self, obj):
+        user = self.context.get("request").user
+        if user.is_authenticated:
+            return obj.likes.filter(pk=user.pk).exists()
+        return False

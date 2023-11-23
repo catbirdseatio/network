@@ -9,7 +9,7 @@ from .permissions import IsAuthorOrReadOnly
 from .serializers import PostSerializer, UserSerializer, UserProfileSerializer
 from .filters import PostFilter
 
-User= get_user_model()
+User = get_user_model()
 
 
 class CurrentUserDetail(views.APIView):
@@ -21,7 +21,7 @@ class CurrentUserDetail(views.APIView):
 class UserProfileDetail(generics.RetrieveAPIView):
     lookup_field = "username"
     serializer_class = UserProfileSerializer
-    
+
     def get_queryset(self):
         username = self.kwargs["username"]
         model = User.objects.filter(username=username)
@@ -42,7 +42,7 @@ class PostList(generics.ListCreateAPIView):
 class FeedList(generics.ListAPIView):
     permission_classes = (permissions.IsAuthenticated,)
     serializer_class = PostSerializer
-    
+
     def get_queryset(self):
         user = self.request.user
         following = user.following.values_list("pk", flat=True)
@@ -58,19 +58,39 @@ class PostDetail(generics.RetrieveUpdateDestroyAPIView):
 
 class FollowUserView(views.APIView):
     permission_classes = (permissions.IsAuthenticated,)
-    
+
     def put(self, request, username):
         author = get_object_or_404(User, username=username)
         user = request.user
-        
+
         if author.pk == user.pk:
-            return Response({'detail': "cannot follow self."}, status=status.HTTP_400_BAD_REQUEST)
-        
+            return Response(
+                {"detail": "cannot follow self."}, status=status.HTTP_400_BAD_REQUEST
+            )
+
         user.follow_author(author)
         return Response({}, status=status.HTTP_204_NO_CONTENT)
-    
+
     def delete(self, request, username):
         author = get_object_or_404(User, username=username)
         user = request.user
         user.unfollow_author(author)
+        return Response({}, status=status.HTTP_204_NO_CONTENT)
+
+
+class PostLikeView(views.APIView):
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def put(self, request, pk):
+        post = get_object_or_404(Post, pk=pk)
+        user = request.user
+
+        post.like_post(user)
+        return Response({}, status=status.HTTP_204_NO_CONTENT)
+
+    def delete(self, request, pk):
+        post = get_object_or_404(Post, pk=pk)
+        user = request.user
+        
+        post.unlike_post(user)
         return Response({}, status=status.HTTP_204_NO_CONTENT)
