@@ -3,22 +3,23 @@ import { useForm, Controller } from "react-hook-form";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 
-const PostForm = ({ onSubmit }) => {
-    const {
-        handleSubmit,
-        reset,
-        control,
-        formState,
-      } = useForm()
-    
-      React.useEffect(() => {
-        if (formState.isSubmitSuccessful) {
-          reset({body: ""})
-        }
-      }, [formState, reset])
+const PostForm = ({ onSubmit, initialData }) => {
+  const { handleSubmit, reset, control, formState } = useForm({
+    defaultValues: initialData,
+  });
+
+  const isEditMode = !!initialData;
+
+  React.useEffect(() => {
+    if (!isEditMode && formState.isSubmitSuccessful) {
+      reset({ body: "" });
+    }
+  }, [formState, reset]);
+
+  const onSubmitHandler = data => onSubmit(data);
 
   return (
-    <Form onSubmit={handleSubmit(onSubmit)}>
+    <Form onSubmit={handleSubmit(onSubmitHandler)}>
       <Form.Group className="mb-3">
         <Form.Label>Body</Form.Label>
         <Controller
@@ -30,7 +31,7 @@ const PostForm = ({ onSubmit }) => {
         />
       </Form.Group>
       <Button variant="primary" type="submit">
-        Submit
+      {isEditMode ? 'Update' : 'Post'}
       </Button>
     </Form>
   );

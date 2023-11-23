@@ -4,6 +4,7 @@ import Stack from "react-bootstrap/Stack";
 import Button from "react-bootstrap/Button";
 import { useApi } from "../../contexts/ApiProvider";
 import { useUserContext } from "../../contexts/UserContext";
+import { Container } from "react-bootstrap";
 
 const AuthorProfileCard = ({ author }) => {
   const [isFollowing, setIsFollowing] = useState(author.is_following);
@@ -37,6 +38,7 @@ const AuthorProfileCard = ({ author }) => {
   };
 
   return (
+    <Container fluid>
     <Card className="my-2">
       <Card.Header>{author.username}</Card.Header>
       <Card.Body>
@@ -51,6 +53,7 @@ const AuthorProfileCard = ({ author }) => {
         )}
       </Card.Body>
     </Card>
+    </Container>
   );
 };
 

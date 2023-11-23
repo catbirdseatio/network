@@ -9,6 +9,7 @@ import Body from "../components/Body";
 import Posts from "../components/Posts";
 import NavButtons from "../components/NavButtons";
 import PostForm from "../components/PostForm";
+import { Container } from "react-bootstrap";
 
 const AllPostsPage = () => {
   const [{ data, isLoading, isError }, setUrl, fetchPosts] = useDataApi(
@@ -17,11 +18,11 @@ const AllPostsPage = () => {
       results: [],
     }
   );
-  
+
   const { results, next, previous } = data;
   const pagination = { next, previous };
   const api = useApi();
-  const { user } = useUserContext()
+  const { user } = useUserContext();
   const navigate = useNavigate();
 
   const nextButtonHandler = () => {
@@ -46,7 +47,11 @@ const AllPostsPage = () => {
   return (
     <Body>
       <h2>All Posts</h2>
-      {user.is_authenticated && <PostForm onSubmit={submitHandler} />}
+      {user.is_authenticated && (
+        <Container fluid className="mb-3">
+          <PostForm onSubmit={submitHandler} />
+        </Container>
+      )}
       {isError && <p className="danger">{isError}</p>}
       {isLoading ? <Spinner /> : <Posts posts={results} />}
       <NavButtons
