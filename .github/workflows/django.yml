@@ -60,6 +60,16 @@ jobs:
         key: ${{ secrets.SSH_KEY }}
         source: "."
         target: ${{ secrets.TARGET_DIRECTORY }}
+    - name: Build the production bundle
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.SERVER_IP }}
+        username: ${{ secrets.SERVER_USERNAME }}
+        port: ${{ env.PORT }}
+        key: ${{ secrets.SSH_KEY }}
+        script: |
+          cd ${{ secrets.TARGET_DIRECTORY }}
+          npm run build
     - name: Install requirements, migrate, and collectstatic
       uses: appleboy/ssh-action@master
       with:
@@ -73,3 +83,12 @@ jobs:
           pip install -r requirements.txt
           python manage.py migrate
           python manage.py collectstatic --noinput
+    - name: Restart gunicorn
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.SERVER_IP }}
+        username: ${{ secrets.SERVER_USERNAME }}
+        port: ${{ env.PORT }}
+        key: ${{ secrets.SSH_KEY }}
+        script: |
+          echo "${{ secrets.SUDO_PASSWORD}}" | sudo -S supervisorctl restart mail_gunicorn
