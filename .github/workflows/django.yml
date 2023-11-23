@@ -69,6 +69,7 @@ jobs:
         key: ${{ secrets.SSH_KEY }}
         script: |
           cd ${{ secrets.TARGET_DIRECTORY }}
+          npm i
           npm run build
     - name: Install requirements, migrate, and collectstatic
       uses: appleboy/ssh-action@master
