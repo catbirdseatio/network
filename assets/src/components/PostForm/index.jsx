@@ -1,10 +1,23 @@
 import React from "react";
 import { useForm, Controller } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 
+const schema = yup.object().shape({
+  body: yup.string().min(5).max(127).required(),
+});
+
 const PostForm = ({ onSubmit, initialData }) => {
-  const { handleSubmit, reset, control, formState } = useForm({
+  const {
+    control,
+    handleSubmit,
+    formState: { errors, ...formState },
+    reset,
+  } = useForm({
+    resolver: yupResolver(schema),
     defaultValues: initialData,
   });
 
@@ -16,7 +29,7 @@ const PostForm = ({ onSubmit, initialData }) => {
     }
   }, [formState, reset]);
 
-  const onSubmitHandler = data => onSubmit(data);
+  const onSubmitHandler = (data) => onSubmit(data);
 
   return (
     <Form onSubmit={handleSubmit(onSubmitHandler)}>
@@ -30,8 +43,8 @@ const PostForm = ({ onSubmit, initialData }) => {
           )}
         />
       </Form.Group>
-      <Button variant={isEditMode ? 'info' : 'primary'} type="submit">
-      {isEditMode ? 'Update' : 'Post'}
+      <Button variant={isEditMode ? "info" : "primary"} type="submit">
+        {isEditMode ? "Update" : "Post"}
       </Button>
     </Form>
   );
