@@ -7,7 +7,11 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 
 const schema = yup.object().shape({
-  body: yup.string().min(5).max(127).required(),
+  body: yup
+    .string()
+    .min(5, "A post must have a minimum of 5 characters.")
+    .max(127, "A post cannot exceed 127 characters.")
+    .required("A body is required."),
 });
 
 const PostForm = ({ onSubmit, initialData }) => {
@@ -42,6 +46,7 @@ const PostForm = ({ onSubmit, initialData }) => {
             <Form.Control as="textarea" rows={3} {...field} />
           )}
         />
+        <p className="text-danger my-3">{errors.body?.message}</p>
       </Form.Group>
       <Button variant={isEditMode ? "info" : "primary"} type="submit">
         {isEditMode ? "Update" : "Post"}
