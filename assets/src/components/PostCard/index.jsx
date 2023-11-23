@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Card from "react-bootstrap/Card";
-import PostForm from "../PostForm";
+import Stack from "react-bootstrap/Stack";
 import { useApi } from "../../contexts/ApiProvider";
+import PostForm from "../PostForm";
+import PostDate from "../PostDate";
 
 const PostCard = ({ post }) => {
   const [isEditing, setIsEditing] = useState(false);
-  const [body, setBody] = useState(post.body); 
+  const [body, setBody] = useState(post.body);
   const api = useApi();
 
   const onEditHandler = async (data) => {
@@ -28,19 +30,18 @@ const PostCard = ({ post }) => {
           <Link to={`/users/${post.author}`}>{post.author}</Link>
         </Card.Title>
         {isEditing ? (
-          <PostForm
-            initialData={{ body }}
-            onSubmit={onEditHandler}
-          />
+          <PostForm initialData={{ body }} onSubmit={onEditHandler} />
         ) : (
           <Card.Text>{body}</Card.Text>
         )}
       </Card.Body>
       <Card.Footer className="text-muted">
-        {post.created_at}
-        {post.is_author && (
-          <Card.Link onClick={() => setIsEditing(!isEditing)}>Edit</Card.Link>
-        )}
+        <Stack>
+          <PostDate date={post.created_at} />
+          {post.is_author && (
+            <Card.Link onClick={() => setIsEditing(!isEditing)}>Edit</Card.Link>
+          )}
+        </Stack>
       </Card.Footer>
     </Card>
   );

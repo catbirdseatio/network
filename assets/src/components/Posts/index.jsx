@@ -5,7 +5,7 @@ import Stack from "react-bootstrap/Stack";
 import { Container } from "react-bootstrap";
 
 const Posts = ({ posts }) => (
-  <Container fluid style={{ minHeight: "100vh" }}>
+  <Container fluid style={{ minHeight: "60vh" }}>
     {posts.length == 0 ? (
       <p>There are no posts.</p>
     ) : (
