@@ -46,8 +46,7 @@ class FeedList(generics.ListAPIView):
     def get_queryset(self):
         user = self.request.user
         following = user.following.values_list("pk", flat=True)
-        print(following)
-        return Post.objects.select_related("author").filter(author_id__in=following)
+        return Post.objects.select_related("author", "likes").filter(author_id__in=following)
 
 
 class PostDetail(generics.RetrieveUpdateDestroyAPIView):

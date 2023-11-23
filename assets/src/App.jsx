@@ -5,11 +5,11 @@ import UserProvider from "./contexts/UserContext";
 
 import Container from "react-bootstrap/Container";
 import Header from "./components/Header";
+import PrivateRoutes from "./components/PrivateRoutes";
 import Redirect from "./components/Redirect";
-import FeedPage from "./pages/FeedPage";
+import FollowingPage from "./pages/FollowingPage";
 import AllPostsPage from "./pages/AllPostsPage";
 import UserPage from "./pages/UserPage";
-import PrivateRoutes from "./components/PrivateRoutes";
 
 const App = () => {
   return (
@@ -22,7 +22,7 @@ const App = () => {
               <Route path="/" element={<AllPostsPage />} />
               <Route path="/users/:username" element={<UserPage />} />
               <Route element={<PrivateRoutes />}>
-                <Route path="/feed" element={<FeedPage />} />
+                <Route path="/feed" element={<FollowingPage />} />
                 <Route path="/logout" element={<Redirect url={"/logout"} />} />
               </Route>
               <Route path="/login" element={<Redirect url={"/login"} />} />

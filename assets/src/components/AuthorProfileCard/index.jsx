@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Card from "react-bootstrap/Card";
 import Stack from "react-bootstrap/Stack";
 import Button from "react-bootstrap/Button";
@@ -39,20 +39,23 @@ const AuthorProfileCard = ({ author }) => {
 
   return (
     <Container fluid>
-    <Card className="my-2">
-      <Card.Header>{author.username}</Card.Header>
-      <Card.Body>
-        <Stack direction="horizontal" gap={3}>
-          <p>Followers: {followersCount}</p>
-          <p>Following: {author.following}</p>
-        </Stack>
-        {user.is_authenticated && user.pk !== author.pk && (
-          <button onClick={handleFollow}>
-            {isFollowing ? "Unfollow" : "Follow"} ({followersCount} followers)
-          </button>
-        )}
-      </Card.Body>
-    </Card>
+      <Card className="my-2">
+        <Card.Header>{author.username}</Card.Header>
+        <Card.Body>
+          <Stack direction="horizontal" gap={3}>
+            <p>Followers: {followersCount}</p>
+            <p>Following: {author.following}</p>
+          </Stack>
+          {user.is_authenticated && user.pk !== author.pk && (
+            <Button
+              variant={isFollowing ? "danger" : "primary"}
+              onClick={handleFollow}
+            >
+              {isFollowing ? "Unfollow" : "Follow"}
+            </Button>
+          )}
+        </Card.Body>
+      </Card>
     </Container>
   );
 };

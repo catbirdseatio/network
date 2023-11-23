@@ -10,7 +10,7 @@ import Posts from "../components/Posts";
 import NavButtons from "../components/NavButtons";
 import PostForm from "../components/PostForm";
 
-const AllPostsPage = () => {
+const FollowingPage = () => {
   const [{ data, isLoading, isError }, setUrl, fetchPosts] = useDataApi(
     "/posts/feed",
     {
@@ -45,4 +45,4 @@ const AllPostsPage = () => {
   );
 };
 
-export default AllPostsPage;
+export default FollowingPage;

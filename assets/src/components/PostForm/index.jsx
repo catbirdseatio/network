@@ -30,7 +30,7 @@ const PostForm = ({ onSubmit, initialData }) => {
           )}
         />
       </Form.Group>
-      <Button variant="primary" type="submit">
+      <Button variant={isEditMode ? 'info' : 'primary'} type="submit">
       {isEditMode ? 'Update' : 'Post'}
       </Button>
     </Form>
