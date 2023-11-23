@@ -9,6 +9,7 @@ import Redirect from "./components/Redirect";
 import FeedPage from "./pages/FeedPage";
 import AllPostsPage from "./pages/AllPostsPage";
 import UserPage from "./pages/UserPage";
+import PrivateRoutes from "./components/PrivateRoutes";
 
 const App = () => {
   return (
@@ -19,10 +20,12 @@ const App = () => {
             <Header />
             <Routes>
               <Route path="/" element={<AllPostsPage />} />
-              <Route path="/feed" element={<FeedPage />} />
               <Route path="/users/:username" element={<UserPage />} />
+              <Route element={<PrivateRoutes />}>
+                <Route path="/feed" element={<FeedPage />} />
+                <Route path="/logout" element={<Redirect url={"/logout"} />} />
+              </Route>
               <Route path="/login" element={<Redirect url={"/login"} />} />
-              <Route path="/logout" element={<Redirect url={"/logout"} />} />
               <Route path="*" element={<Navigate to="/" />} />
             </Routes>
           </UserProvider>
