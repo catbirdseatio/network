@@ -40,7 +40,7 @@ const AuthorProfileCard = ({ author }) => {
     <Card className="my-2">
       <Card.Header>{author.username}</Card.Header>
       <Card.Body>
-        <Stack>
+        <Stack direction="horizontal" gap={3}>
           <p>Followers: {followersCount}</p>
           <p>Following: {author.following}</p>
         </Stack>
