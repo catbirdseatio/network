@@ -62,6 +62,7 @@ class PostSerializer(serializers.ModelSerializer):
         return obj.author == self.context.get("request").user
 
     def get_like_count(self, obj):
+        print(obj.like_count)
         return obj.like_count()
     
     def get_is_liked(self, obj):
