@@ -27,18 +27,15 @@ const PostForm = ({ onSubmit, initialData }) => {
 
   const isEditMode = !!initialData;
 
-  React.useEffect(() => {
-    if (!isEditMode && formState.isSubmitSuccessful) {
-      reset({ body: "" });
-    }
-  }, [formState, reset]);
-
-  const onSubmitHandler = (data) => onSubmit(data);
+  const onSubmitHandler = (data) => {
+    onSubmit(data);
+    // reset the form; assumes onSubmit was successful.
+    if (!isEditMode) reset({body: ""})
+  }
 
   return (
     <Form onSubmit={handleSubmit(onSubmitHandler)}>
       <Form.Group className="mb-3">
-        <Form.Label>Body</Form.Label>
         <Controller
           name="body"
           control={control}
