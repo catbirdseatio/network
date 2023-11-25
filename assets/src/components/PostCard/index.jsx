@@ -3,12 +3,15 @@ import { Link } from "react-router-dom";
 import Card from "react-bootstrap/Card";
 import Stack from "react-bootstrap/Stack";
 import { useApi } from "../../contexts/ApiProvider";
+import LikeButton from "../LikeButton";
 import PostForm from "../PostForm";
 import PostDate from "../PostDate";
 
 const PostCard = ({ post }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [body, setBody] = useState(post.body);
+  const [isLiked, setIsLiked] = useState(post.is_liked);
+  const [likes, setLikes] = useState(post.like_count);
   const api = useApi();
 
   const onEditHandler = async (data) => {
@@ -19,6 +22,24 @@ const PostCard = ({ post }) => {
       setBody(data.body);
     } catch (error) {
       console.log(error.message);
+    }
+  };
+
+  const onLikeHandler = async () => {
+    const url = `/posts/${post.pk}/like`;
+    setIsLiked(!isLiked);
+    setLikes(isLiked ? likes - 1 : likes + 1);
+
+    try {
+      if (isLiked) {
+        await api.delete(url);
+      } else {
+        await api.put(url);
+      }
+    } catch (error) {
+      setIsLiked(!isLiked);
+      setLikes(isLiked ? likes - 1 : likes + 1);
+      console.error("Error handling like/unlike:", error.message);
     }
   };
 
@@ -37,6 +58,7 @@ const PostCard = ({ post }) => {
       </Card.Body>
       <Card.Footer className="text-muted">
         <Stack>
+          <LikeButton isLiked={isLiked} likes={likes} onLike={onLikeHandler}/>
           <PostDate date={post.created_at} />
           {post.is_author && (
             <Card.Link onClick={() => setIsEditing(!isEditing)}>Edit</Card.Link>
