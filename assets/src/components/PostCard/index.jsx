@@ -13,6 +13,7 @@ const PostCard = ({ post }) => {
   const [isLiked, setIsLiked] = useState(post.is_liked);
   const [likes, setLikes] = useState(post.like_count);
   const api = useApi();
+  console.log(post)
 
   const onEditHandler = async (data) => {
     try {
