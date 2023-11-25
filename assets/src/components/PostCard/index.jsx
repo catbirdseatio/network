@@ -58,7 +58,7 @@ const PostCard = ({ post }) => {
       </Card.Body>
       <Card.Footer className="text-muted">
         <Stack>
-          <LikeButton isLiked={isLiked} likes={likes} onLike={onLikeHandler}/>
+          <LikeButton isLiked={isLiked} likes={likes} onLike={onLikeHandler} />
           <PostDate date={post.created_at} />
           {post.is_author && (
             <Card.Link onClick={() => setIsEditing(!isEditing)}>Edit</Card.Link>

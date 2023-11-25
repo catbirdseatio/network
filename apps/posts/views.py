@@ -30,7 +30,7 @@ class UserProfileDetail(generics.RetrieveAPIView):
 
 class PostList(generics.ListCreateAPIView):
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
-    queryset = Post.objects.select_related("author").all()
+    queryset = Post.objects.select_related("author").prefetch_related("likes").all()
     serializer_class = PostSerializer
     filter_backends = (filters.DjangoFilterBackend,)
     filterset_class = PostFilter
@@ -46,12 +46,12 @@ class FeedList(generics.ListAPIView):
     def get_queryset(self):
         user = self.request.user
         following = user.following.values_list("pk", flat=True)
-        return Post.objects.select_related("author").filter(author_id__in=following)
+        return Post.objects.select_related("author").prefetch_related("likes").filter(author_id__in=following)
 
 
 class PostDetail(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = (IsAuthorOrReadOnly,)
-    queryset = Post.objects.select_related("author").all()
+    queryset = Post.objects.select_related("author").prefetch_related("likes").all()
     serializer_class = PostSerializer
 
 
