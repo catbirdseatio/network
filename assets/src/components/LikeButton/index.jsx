@@ -13,7 +13,7 @@ const LikeButton = ({ isLiked, likes, onLike }) => {
         inactiveColor="lightgray"
         isActive={isLiked}
         onClick={() => (user.is_authenticated ? onLike() : null)}
-        animationScale={1.25}
+        animationScale={user.is_authenticated ? 2 : 1}
       />
       <>{likes}</>
     </Stack>
