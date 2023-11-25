@@ -55,6 +55,7 @@ class PostSerializer(serializers.ModelSerializer):
         model = Post
         fields = ("pk", "author", "body", "created_at", "is_author", "is_liked", "like_count")
 
+
     def get_author(self, obj):
         return obj.author.username
 
@@ -62,7 +63,6 @@ class PostSerializer(serializers.ModelSerializer):
         return obj.author == self.context.get("request").user
 
     def get_like_count(self, obj):
-        print(obj.like_count)
         return obj.like_count()
     
     def get_is_liked(self, obj):

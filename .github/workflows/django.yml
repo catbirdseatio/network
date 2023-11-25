@@ -92,4 +92,4 @@ jobs:
         port: ${{ env.PORT }}
         key: ${{ secrets.SSH_KEY }}
         script: |
-          echo "${{ secrets.SUDO_PASSWORD}}" | sudo -S supervisorctl restart mail_gunicorn
+          echo "${{ secrets.SUDO_PASSWORD}}" | sudo -S supervisorctl restart network_gunicorn
