@@ -5,6 +5,7 @@ import Spinner from "react-bootstrap/Spinner";
 import useDataApi from "../hooks/useDataApi";
 import { useUserContext } from "../contexts/UserContext";
 import { useApi } from "../contexts/ApiProvider";
+import { useFlash } from "../contexts/FlashProvider";
 import Body from "../components/Body";
 import Posts from "../components/Posts";
 import NavButtons from "../components/NavButtons";
@@ -22,6 +23,7 @@ const AllPostsPage = () => {
   const { results, next, previous } = data;
   const pagination = { next, previous };
   const api = useApi();
+  const flash = useFlash()
   const { user } = useUserContext();
   const navigate = useNavigate();
 
@@ -37,6 +39,7 @@ const AllPostsPage = () => {
       await api.post("/posts/", data);
       // reset state by resetting url and navigating back to homepage.
       setUrl("/posts/");
+      flash("The post was successfully submitted.", "success")
       fetchPosts();
       navigate("/");
     } catch (error) {

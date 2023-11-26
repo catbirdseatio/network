@@ -9,7 +9,7 @@ const Header = () => {
   const { user } = useUserContext();
 
   return (
-    <Navbar expand="lg" className="bg-body-tertiary Header">
+    <Navbar expand="lg" className="bg-body-tertiary Header mb-2">
       <Container fluid>
         <Navbar.Brand href="/">Network</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />

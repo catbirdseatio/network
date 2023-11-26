@@ -6,6 +6,7 @@ import { useApi } from "../../contexts/ApiProvider";
 import LikeButton from "../LikeButton";
 import PostForm from "../PostForm";
 import PostDate from "../PostDate";
+import { useFlash } from "../../contexts/FlashProvider";
 
 const PostCard = ({ post }) => {
   const [isEditing, setIsEditing] = useState(false);
@@ -13,15 +14,17 @@ const PostCard = ({ post }) => {
   const [isLiked, setIsLiked] = useState(post.is_liked);
   const [likes, setLikes] = useState(post.like_count);
   const api = useApi();
+  const flash = useFlash();
 
   const onEditHandler = async (data) => {
     try {
       await api.put(`/posts/${post.pk}`, data);
       setIsEditing(false);
+      flash("The post has been updated.", "success")
       // reset the state
       setBody(data.body);
     } catch (error) {
-      console.log(error.message);
+      flash(error.message, "danger");
     }
   };
 
