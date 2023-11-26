@@ -1,8 +1,8 @@
 import axios from "axios";
 
-axios.defaults.xsrfCookieName = 'csrftoken'
-axios.defaults.xsrfHeaderName = "X-CSRFTOKEN"
+axios.defaults.xsrfCookieName = "csrftoken";
+axios.defaults.xsrfHeaderName = "X-CSRFTOKEN";
 
 export default axios.create({
-    baseURL: "/api/v1"
-})
+  baseURL: "/api/v1",
+});

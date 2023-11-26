@@ -19,7 +19,7 @@ class UserFactory(factory.django.DjangoModelFactory):
 
 
 class PostFactory(factory.django.DjangoModelFactory):
-    body = factory.fuzzy.FuzzyText(length=127)
+    body = factory.Faker('text', max_nb_chars=127)
     author = factory.SubFactory(UserFactory)
     
     class Meta:

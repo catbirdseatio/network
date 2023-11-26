@@ -9,7 +9,7 @@ pytestmark = pytest.mark.django_db
 class TestPost:
     def test_post_model(self, test_user, test_post):
         assert test_post.author.username == test_user.username
-        assert len(test_post.body) == 127
+        assert len(test_post.body) < 127
     
     def test_post_model_clean_raises_validation_error(self, test_user):
         with pytest.raises(ValidationError):

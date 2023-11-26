@@ -1,0 +1,5 @@
+{
+    "ignorePatterns": ["./assets/src/index.js"],
+    "parser": "@babel/eslint-parser",
+    "extends": ["airbnb"]
+  }
