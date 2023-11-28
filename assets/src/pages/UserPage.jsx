@@ -46,7 +46,7 @@ const UserPage = () => {
         {isErrorPosts && flash("There was an error with posts.", "danger")}
         {isErrorAuthor && flash("There was an error with the author.", "danger")}
         {isLoadingAuthor ? <Spinner /> : <AuthorProfileCard author={author}/>}
-        {isLoading ? <Spinner /> : <Posts posts={results} />}
+        {isLoadingPosts ? <Spinner /> : <Posts posts={results} />}
         <NavButtons
           pagination={pagination}
           onNext={nextButtonHandler}
