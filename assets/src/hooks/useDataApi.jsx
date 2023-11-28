@@ -11,6 +11,7 @@ const useDataApi = (initalUrl, initialData) => {
   const fetchData = async () => {
     setIsError(false);
     setIsLoading(true);
+    setData(initialData);
 
     try {
       const result = await api.get(url);
