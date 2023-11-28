@@ -3,7 +3,7 @@ from rest_framework.utils.urls import remove_query_param, replace_query_param
 
 
 class PostPagination(PageNumberPagination):
-    page_size = 3
+    page_size = 10
     url = "/posts/"
 
     def get_next_link(self):
