@@ -9,7 +9,7 @@ User = get_user_model()
 
 class PostFilter(django_filters.FilterSet):
     author_username = django_filters.CharFilter(
-        field_name="author__username", lookup_expr="icontains"
+        field_name="author__username", lookup_expr="contains"
     )
 
     class Meta:
