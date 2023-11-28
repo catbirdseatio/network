@@ -3,6 +3,7 @@ import { useParams } from "react-router";
 import Spinner from "react-bootstrap/Spinner";
 
 import useDataApi from "../hooks/useDataApi";
+import { useFlash } from "../contexts/FlashProvider";
 import Body from "../components/Body";
 import Posts from "../components/Posts";
 import NavButtons from "../components/NavButtons";
@@ -13,6 +14,7 @@ const UserPage = () => {
   { 
 
     const { username } = useParams();
+    const { flash } = useFlash();
 
     const [{ data:posts, isLoading:isLoadingPosts, isError:isErrorPosts }, setUrl] = useDataApi(`/posts/?author_username=${username}`, {
       results: [],
@@ -41,7 +43,8 @@ const UserPage = () => {
   
     return (
       <Body>
-        {isError && <p className="danger">{isError}</p>}
+        {isErrorPosts && flash("There was an error with posts.", "danger")}
+        {isErrorAuthor && flash("There was an error with the author.", "danger")}
         {isLoadingAuthor ? <Spinner /> : <AuthorProfileCard author={author}/>}
         {isLoading ? <Spinner /> : <Posts posts={results} />}
         <NavButtons
