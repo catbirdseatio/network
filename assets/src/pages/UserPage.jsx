@@ -14,7 +14,7 @@ const UserPage = () => {
 
     const { username } = useParams();
 
-    const [{ data, isLoading, isError }, setUrl] = useDataApi(`/posts/?author_username=${username}`, {
+    const [{ data:posts, isLoading:isLoadingPosts, isError:isErrorPosts }, setUrl] = useDataApi(`/posts/?author_username=${username}`, {
       results: [],
     });
 
@@ -29,7 +29,7 @@ const UserPage = () => {
     }, [username])
     
 
-    const { results, next, previous } = data;
+    const { results, next, previous } = posts;
     const pagination = { next, previous };
   
     const nextButtonHandler = () => {
