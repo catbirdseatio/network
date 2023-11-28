@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useParams } from "react-router";
 import Spinner from "react-bootstrap/Spinner";
 
@@ -14,7 +14,7 @@ const UserPage = () => {
   { 
 
     const { username } = useParams();
-    const { flash } = useFlash();
+    const flash = useFlash();
 
     const [{ data:posts, isLoading:isLoadingPosts, isError:isErrorPosts }, setUrl] = useDataApi(`/posts/?author_username=${username}`, {
       results: [],

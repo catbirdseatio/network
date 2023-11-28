@@ -42,7 +42,7 @@ const PostCard = ({ post }) => {
     } catch (error) {
       setIsLiked(!isLiked);
       setLikes(isLiked ? likes - 1 : likes + 1);
-      console.error("Error handling like/unlike:", error.message);
+      flash("Error handling like/unlike:", error.message);
     }
   };
 
