@@ -50,11 +50,18 @@ class PostSerializer(serializers.ModelSerializer):
     is_author = serializers.SerializerMethodField(read_only=True)
     is_liked = serializers.SerializerMethodField(read_only=True)
     like_count = serializers.SerializerMethodField(read_only=True)
-    
+
     class Meta:
         model = Post
-        fields = ("pk", "author", "body", "created_at", "is_author", "is_liked", "like_count")
-
+        fields = (
+            "pk",
+            "author",
+            "body",
+            "created_at",
+            "is_author",
+            "is_liked",
+            "like_count",
+        )
 
     def get_author(self, obj):
         return obj.author.username
@@ -64,7 +71,7 @@ class PostSerializer(serializers.ModelSerializer):
 
     def get_like_count(self, obj):
         return obj.like_count()
-    
+
     def get_is_liked(self, obj):
         user = self.context.get("request").user
         if user.is_authenticated:

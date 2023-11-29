@@ -7,7 +7,7 @@ from .views import (
     UserProfileDetail,
     FeedList,
     FollowUserView,
-    PostLikeView
+    PostLikeView,
 )
 
 app_name = "posts"

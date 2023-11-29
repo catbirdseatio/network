@@ -24,7 +24,9 @@ class UserProfileDetail(generics.RetrieveAPIView):
 
     def get_queryset(self):
         username = self.kwargs["username"]
-        model = User.objects.prefetch_related("followers", "following").filter(username=username)
+        model = User.objects.prefetch_related("followers", "following").filter(
+            username=username
+        )
         return model
 
 
@@ -46,7 +48,11 @@ class FeedList(generics.ListAPIView):
     def get_queryset(self):
         user = self.request.user
         following = user.following.values_list("pk", flat=True)
-        return Post.objects.select_related("author").prefetch_related("likes").filter(author_id__in=following)
+        return (
+            Post.objects.select_related("author")
+            .prefetch_related("likes")
+            .filter(author_id__in=following)
+        )
 
 
 class PostDetail(generics.RetrieveUpdateDestroyAPIView):
@@ -90,6 +96,6 @@ class PostLikeView(views.APIView):
     def delete(self, request, pk):
         post = get_object_or_404(Post, pk=pk)
         user = request.user
-        
+
         post.unlike_post(user)
         return Response({}, status=status.HTTP_204_NO_CONTENT)
