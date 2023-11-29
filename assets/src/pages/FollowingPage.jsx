@@ -33,7 +33,7 @@ const FollowingPage = () => {
 
   return (
     <Body>
-      <h2>Feed</h2>
+      <h2>Following</h2>
       {isError && <p className="danger">{isError}</p>}
       {isLoading ? <Spinner /> : <Posts posts={results} />}
       <NavButtons
