@@ -15,7 +15,6 @@ const useDataApi = (initalUrl, initialData) => {
 
     try {
       const result = await api.get(url);
-      console.log(result.data)
       setData(result.data);
     } catch (error) {
       setIsError(true);
