@@ -5,9 +5,13 @@ A project that allows users to make small blog posts, follow other users, and li
 See it live: [network.catbirdseat.io](https://network.catbirdseat.io)
 Video Demo: [YouTube](https://youtu.be/-sOrSYxr9Rk)
 
+## Python
+
+The backend API, login, registration, and home pages are served by the [Django Framework](https://www.djangoproject.com/) and [Django Rest Framework](https://www.django-rest-framework.org/). The javascript frontend is sent with the static files.
+
 ## Javascript
 
-This project's javascript is bundled using the Webpack 5 module bundler. 
+This project's javascript is bundled using the Webpack 5 module bundler. The user interface was built with the [React Library](https://react.dev/). Individual pages were built with components and displayed onto the screen.
 
 ## Installation
 Be sure to have Python 3.11 an Node 20+ installed.
@@ -15,8 +19,8 @@ Be sure to have Python 3.11 an Node 20+ installed.
 Create a virtual environment and install requirements:
 `python3.11 -m venv .venv
 source .venv/bin/activate
-pip install -r requirements.txt
-`
+pip install -r requirements.txt`
+
 Run the bundler in the root directory:
 `npm install
 npm run dev
