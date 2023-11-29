@@ -31,6 +31,7 @@ const App = () => {
                   />
                 </Route>
                 <Route path="/login" element={<Redirect url={"/login"} />} />
+                <Route path="/register" element={<Redirect url={"/register"} />} />
                 <Route path="*" element={<Navigate to="/" />} />
               </Routes>
             </UserProvider>
