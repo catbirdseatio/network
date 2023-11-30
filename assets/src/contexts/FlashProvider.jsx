@@ -1,9 +1,9 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState } from "react";
 
 export const FlashContext = createContext();
 let flashTimer;
 
-const FlashProvider = ({ children })=> {
+const FlashProvider = ({ children }) => {
   const [flashMessage, setFlashMessage] = useState({});
   const [visible, setVisible] = useState(false);
 
@@ -12,7 +12,7 @@ const FlashProvider = ({ children })=> {
       clearTimeout(flashTimer);
       flashTimer = undefined;
     }
-    setFlashMessage({message, type});
+    setFlashMessage({ message, type });
     setVisible(true);
     if (duration) {
       flashTimer = setTimeout(hideFlash, duration * 1000);
@@ -24,14 +24,12 @@ const FlashProvider = ({ children })=> {
   };
 
   return (
-    <FlashContext.Provider value={{flash, hideFlash, flashMessage, visible}}>
+    <FlashContext.Provider value={{ flash, hideFlash, flashMessage, visible }}>
       {children}
     </FlashContext.Provider>
   );
-}
+};
 
-export function useFlash() {
-  return useContext(FlashContext).flash;
-}
+export const useFlash = () => useContext(FlashContext).flash;
 
-export default FlashProvider
+export default FlashProvider;

@@ -8,6 +8,7 @@ CustomUser = get_user_model()
 
 
 class UserSerializer(serializers.ModelSerializer):
+    """Serializer for the current user. If a user is anonymous is_authenticated is False."""
     is_authenticated = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
@@ -24,6 +25,7 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class UserProfileSerializer(serializers.ModelSerializer):
+    """Return a user, followers, and whether or not the current user is following the user."""
     followers = serializers.SerializerMethodField(read_only=True)
     following = serializers.SerializerMethodField(read_only=True)
     is_following = serializers.SerializerMethodField(read_only=True)
@@ -46,6 +48,8 @@ class UserProfileSerializer(serializers.ModelSerializer):
 
 
 class PostSerializer(serializers.ModelSerializer):
+    """Serializer for a Post. Returns whether the current user is the author and if he/she
+    likes the post. Also returns the number of likes the post has."""
     author = serializers.SerializerMethodField(read_only=True)
     is_author = serializers.SerializerMethodField(read_only=True)
     is_liked = serializers.SerializerMethodField(read_only=True)
